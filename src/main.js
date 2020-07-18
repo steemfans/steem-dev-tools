@@ -3,6 +3,8 @@ import {
   Layout,
   Menu,
   Icon,
+  Row,
+  Col,
 } from 'ant-design-vue';
 import App from './App.vue';
 import router from './router';
@@ -17,6 +19,8 @@ const components = [
   Sider,
   Content,
   Footer,
+  Row,
+  Col,
 ];
 components.map((component) => Vue.use(component));
 
