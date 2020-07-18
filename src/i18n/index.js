@@ -10,8 +10,15 @@ const messages = {
   zh,
 };
 
+// detect language
+const browserLang = window.navigator.language;
+let defaultLang = 'zh';
+if (browserLang.slice(0, 2) !== 'zh') {
+  defaultLang = 'en';
+}
+
 const i18n = new VueI18n({
-  locale: 'zh',
+  locale: defaultLang,
   messages,
 });
 
