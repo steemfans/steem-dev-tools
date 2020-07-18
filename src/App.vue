@@ -11,13 +11,13 @@
         <a-menu-item key="home">
           <a-icon type="home" />
           <router-link to="/">
-            <span class="nav-text">{{ $t("home") }}</span>
+            <span class="nav-text">{{ $t("common.home") }}</span>
           </router-link>
         </a-menu-item>
         <a-menu-item key="about">
           <a-icon type="bulb" />
           <router-link to="/about">
-            <span class="nav-text">{{ $t("about") }}</span>
+            <span class="nav-text">{{ $t("common.about") }}</span>
           </router-link>
         </a-menu-item>
       </a-menu>

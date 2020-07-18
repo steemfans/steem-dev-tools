@@ -1,4 +1,9 @@
 export default {
-  home: 'Home',
-  about: 'About',
+  common: {
+    home: 'Home',
+    about: 'About',
+  },
+  about: {
+    description: '',
+  },
 };

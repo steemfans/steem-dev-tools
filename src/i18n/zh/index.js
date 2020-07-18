@@ -1,4 +1,9 @@
 export default {
-  home: '首页',
-  about: '关于',
+  common: {
+    home: '首页',
+    about: '关于',
+  },
+  about: {
+    description: '',
+  },
 };
