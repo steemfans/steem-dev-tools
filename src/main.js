@@ -5,6 +5,7 @@ import {
   Icon,
   Row,
   Col,
+  Card,
 } from 'ant-design-vue';
 import App from './App.vue';
 import router from './router';
@@ -21,6 +22,7 @@ const components = [
   Footer,
   Row,
   Col,
+  Card,
 ];
 components.map((component) => Vue.use(component));
 
