@@ -1,31 +1,62 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <a-layout id="main">
+    <a-layout-sider
+      breakpoint="lg"
+      collapsed-width="0"
+      @collapse="onCollapse"
+      @breakpoint="onBreakpoint"
+    >
+      <div class="logo" />
+      <a-menu theme="dark" mode="inline" :default-selected-keys="['home']">
+        <a-menu-item key="home">
+          <a-icon type="home" />
+          <router-link to="/">
+            <span class="nav-text">Home</span>
+          </router-link>
+        </a-menu-item>
+        <a-menu-item key="about">
+          <a-icon type="bulb" />
+          <router-link to="/about">
+            <span class="nav-text">About</span>
+          </router-link>
+        </a-menu-item>
+      </a-menu>
+    </a-layout-sider>
+    <a-layout>
+      <a-layout-header :style="{ background: '#fff', padding: '0 16px' }">
+        <h1>Steem Dev Tools</h1>
+      </a-layout-header>
+      <a-layout-content :style="{ margin: '24px 16px 0' }">
+        <div :style="{ padding: '24px', background: '#fff', height: '100%' }">
+          <router-view/>
+        </div>
+      </a-layout-content>
+      <a-layout-footer style="textAlign: center">
+        Steem Dev Tools ©2020 Created by <a href="https://steemit/@ety001">@ety001</a>
+      </a-layout-footer>
+    </a-layout>
+  </a-layout>
 </template>
 
+<script>
+export default {
+  methods: {
+    onCollapse(collapsed, type) {
+      console.log(collapsed, type);
+    },
+    onBreakpoint(broken) {
+      console.log(broken);
+    },
+  },
+};
+</script>
+
 <style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+#main {
+  height: 100%;
+  .ant-menu-item {
+    a {
+      display: inline-block;
     }
   }
 }

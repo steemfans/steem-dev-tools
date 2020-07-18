@@ -1,10 +1,25 @@
 import Vue from 'vue';
-import { Button } from 'ant-design-vue';
+import {
+  Layout,
+  Menu,
+  Icon,
+} from 'ant-design-vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
 
-Vue.component(Button.name, Button);
+const { Sider, Content, Footer } = Layout;
+const components = [
+  Layout,
+  Menu,
+  Icon,
+  Sider,
+  Content,
+  Footer,
+];
+
+components.map((component) => Vue.use(component));
+
 Vue.config.productionTip = false;
 
 new Vue({
