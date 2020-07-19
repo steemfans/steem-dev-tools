@@ -6,23 +6,26 @@ import {
   Row,
   Col,
   Card,
+  List,
 } from 'ant-design-vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
 import i18n from './i18n';
 
-const { Sider, Content, Footer } = Layout;
 const components = [
   Layout,
   Menu,
   Icon,
-  Sider,
-  Content,
-  Footer,
+  Layout.Sider,
+  Layout.Content,
+  Layout.Footer,
   Row,
   Col,
   Card,
+  List,
+  List.Item,
+  List.Item.Meta,
 ];
 components.map((component) => Vue.use(component));
 
