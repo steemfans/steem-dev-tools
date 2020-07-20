@@ -1,5 +1,23 @@
 <template>
-  <div></div>
+  <a-card :title="$t('home.summary.title')" :loading="loading">
+    <a-list item-layout="horizontal" :data-source="data">
+      <a-list-item slot="renderItem" slot-scope="item">
+        <a-list-item-meta
+          :description="item.value"
+        >
+          <template v-if="item.tips" slot="title">
+            <a-tooltip>
+              <template slot="title">
+                {{ item.tips }}
+              </template>
+              {{ item.paramName }}
+            </a-tooltip>
+          </template>
+          <template v-else slot="title">{{ item.paramName }}</template>
+        </a-list-item-meta>
+      </a-list-item>
+    </a-list>
+  </a-card>
 </template>
 
 <script>
@@ -11,13 +29,13 @@ export default {
   name: 'BlockInfo',
   data() {
     return {
+      data: [],
+      loading: false,
     };
-  },
-  props: {
-    updateLoadingStatus: Function,
   },
   methods: {
     async initData() {
+      this.loading = true;
       const config = await steem.api.getConfigAsync();
       const dgp = await steem.api.getDynamicGlobalPropertiesAsync();
       const wso = await steem.api.getWitnessScheduleAsync();
@@ -56,22 +74,23 @@ export default {
       const newSteem = (virtualSupply[0] * currentInflationRate)
       / (STEEM_100_PERCENT * STEEM_BLOCKS_PER_YEAR);
 
-      let contentReward = (newSteem * contentRewardPercent) / STEEM_100_PERCENT;
-      console.log('contentReward:', contentReward);
-      contentReward = this.payRewardFunds(contentReward);
+      const contentReward = (newSteem * contentRewardPercent) / STEEM_100_PERCENT;
+      const contentReward2 = this.payRewardFunds(contentReward);
       const vestingReward = (newSteem * vestingRewardPercent) / STEEM_100_PERCENT;
       const spsFund = (newSteem * spsFundPercent) / STEEM_100_PERCENT;
-      let witnessReward = newSteem - contentReward - vestingReward - spsFund;
+      const witnessReward = newSteem - contentReward2 - vestingReward - spsFund;
 
-      witnessReward *= STEEM_MAX_WITNESSES;
+      let witnessReward2 = witnessReward * STEEM_MAX_WITNESSES;
 
-      if (top20arr.indexOf(cwit.owner) !== -1) {
-        witnessReward *= wso.timeshare_weight;
+      let currentWeight = 0;
+      if (top20arr.indexOf(cwit.owner) === -1) {
+        currentWeight = wso.timeshare_weight;
       } else {
-        witnessReward *= wso.elected_weight;
+        currentWeight = wso.elected_weight;
       }
+      witnessReward2 *= currentWeight;
 
-      witnessReward /= wso.witness_pay_normalization_factor;
+      witnessReward2 /= wso.witness_pay_normalization_factor;
 
       let newSbd = 0;
 
@@ -84,16 +103,164 @@ export default {
       }
 
       // the final total reward.
-      const newSteem2 = contentReward + vestingReward + witnessReward;
+      const newSteem2 = contentReward2 + vestingReward + witnessReward2;
 
-      console.log(`total_vesting_fund_steem will increase ${vestingReward} STEEM.`);
-      console.log(`total_reward_fund_steem will increase ${contentReward} STEEM.`);
-      console.log(`current_supply will increase ${newSteem2} STEEM.`);
-      console.log(`current_sbd_supply will increase ${newSbd} SBD.`);
-      console.log(`virtual_supply will increase ${newSteem2} + ${spsFund} STEEM.`);
-      console.log(`sps_interval_ledger will increase ${newSbd} SBD.`);
+      // Display the data
+      this.data = [
+        {
+          paramName: `STEEM_INFLATION_RATE_START_PERCENT(${STEEM_INFLATION_RATE_START_PERCENT / 100}%)`,
+          value: STEEM_INFLATION_RATE_START_PERCENT,
+        },
+        {
+          paramName: 'STEEM_INFLATION_NARROWING_PERIOD',
+          value: STEEM_INFLATION_NARROWING_PERIOD,
+        },
+        {
+          paramName: `STEEM_INFLATION_RATE_STOP_PERCENT(${STEEM_INFLATION_RATE_STOP_PERCENT / 100}%)`,
+          value: STEEM_INFLATION_RATE_STOP_PERCENT,
+        },
+        {
+          paramName: `currentInflationRate(*)(${parseInt(currentInflationRate, 10) / 100}%)`,
+          tips: 'Math.max(STEEM_INFLATION_RATE_START_PERCENT - head_block_number / STEEM_INFLATION_NARROWING_PERIOD, STEEM_INFLATION_RATE_STOP_PERCENT)',
+          value: currentInflationRate,
+        },
+        {
+          paramName: 'STEEM_BLOCKS_PER_YEAR',
+          value: STEEM_BLOCKS_PER_YEAR,
+        },
+        {
+          paramName: 'STEEM_MAX_WITNESSES',
+          value: STEEM_MAX_WITNESSES,
+        },
+        {
+          paramName: 'STEEM_TREASURY_ACCOUNT',
+          value: STEEM_TREASURY_ACCOUNT,
+        },
+        {
+          paramName: 'witness_pay_normalization_factor',
+          value: wso.witness_pay_normalization_factor,
+        },
+        {
+          paramName: 'timeshare_weight',
+          value: wso.timeshare_weight,
+        },
+        {
+          paramName: 'elected_weight',
+          value: wso.elected_weight,
+        },
+        {
+          paramName: 'currentWitness',
+          value: cwit.owner,
+        },
+        {
+          paramName: 'currentWitnessWeight(*)',
+          tips: 'if(current witness is not top20){timeshare_weight} else {elected_weight}',
+          value: currentWeight,
+        },
+        {
+          paramName: 'current_median_history',
+          tips: 'base / quote',
+          value: `${feed.current_median_history.base} / ${feed.current_median_history.quote}`,
+        },
+        {
+          paramName: 'head_block_number',
+          value: dgp.head_block_number,
+        },
+        {
+          paramName: `contentRewardPercent(${dgp.content_reward_percent / 100}%)`,
+          value: dgp.content_reward_percent,
+        },
+        {
+          paramName: `vestingRewardPercent(${dgp.vesting_reward_percent / 100}%)`,
+          value: dgp.vesting_reward_percent,
+        },
+        {
+          paramName: `spsFundPercent(${dgp.sps_fund_percent / 100}%)`,
+          value: dgp.sps_fund_percent,
+        },
+        {
+          paramName: 'virtual_supply',
+          value: dgp.virtual_supply,
+        },
+        {
+          paramName: 'EachBlockRewardInTheory(*)',
+          tips: 'virtual_supply * currentInflationRate / STEEM_BLOCKS_PER_YEAR',
+          value: `${newSteem} STEEM`,
+        },
+        {
+          paramName: 'EachBlockContentRewardInTheory(*)',
+          tips: 'EachBlockRewardInTheory * contentRewardPercent',
+          value: `${contentReward} STEEM`,
+        },
+        {
+          paramName: '? EachBlockContentRewardAfterPayRewardFunds(*)',
+          tips: 'After payRewardFunds()',
+          value: `${contentReward2} STEEM`,
+        },
+        {
+          paramName: 'vestingReward(*)',
+          tips: 'EachBlockRewardInTheory * vestingRewardPercent',
+          value: `${vestingReward} STEEM`,
+        },
+        {
+          paramName: 'spsFund(*)',
+          tips: 'EachBlockRewardInTheory * spsFundPercent',
+          value: `${spsFund} STEEM`,
+        },
+        {
+          paramName: 'spsFundBySBD(*)',
+          tips: 'spsFund * current_median_history.base / current_median_history.quote\n\n(This will transfer to STEEM_TREASURY_ACCOUNT)',
+          value: `${newSbd} SBD`,
+        },
+        {
+          paramName: 'witnessRewardInTheory(*)',
+          tips: 'EachBlockRewardInTheory - EachBlockContentRewardAfterPayRewardFunds - vestingReward - spsFund',
+          value: `${witnessReward} STEEM`,
+        },
+        {
+          paramName: 'theFinalWitnessReward(*)',
+          tips: 'witnessRewardInTheory * STEEM_MAX_WITNESSES * currentWitnessWeight / witness_pay_normalization_factor',
+          value: `${witnessReward2} STEEM`,
+        },
+        {
+          paramName: 'theFinalBlockReward(*)',
+          tips: 'EachBlockContentRewardAfterPayRewardFunds + vestingReward + theFinalWitnessReward',
+          value: `${newSteem2} STEEM`,
+        },
+        {
+          paramName: 'total_vesting_fund_steem will increase(*)',
+          tips: 'vestingReward',
+          value: `${vestingReward} STEEM`,
+        },
+        {
+          paramName: 'total_reward_fund_steem will increase(*)',
+          tips: 'EachBlockContentRewardAfterPayRewardFunds',
+          value: `${contentReward2} STEEM`,
+        },
+        {
+          paramName: 'current_supply will increase(*)',
+          tips: 'theFinalBlockReward',
+          value: `${newSteem2} STEEM`,
+        },
+        {
+          paramName: 'current_sbd_supply will increase(*)',
+          tips: 'spsFundBySBD',
+          value: `${newSbd} SBD`,
+        },
+        {
+          paramName: 'virtual_supply will increase(*)',
+          tips: 'theFinalBlockReward + spsFund',
+          value: `${newSteem2} STEEM`,
+        },
+        {
+          paramName: 'sps_interval_ledger will increase(*)',
+          tips: 'spsFundBySBD',
+          value: `${newSbd} STEEM`,
+        },
+      ];
+      this.loading = false;
       console.log(
-        config, dgp, wso, feed, witnessReward, cwit, newSteem2, reward,
+        config, dgp, wso, feed, witnessReward2, cwit, newSteem2, reward,
       );
     },
     payRewardFunds(reward) {

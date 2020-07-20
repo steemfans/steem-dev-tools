@@ -10,5 +10,8 @@ export default {
     block_reward: {
       title: 'Reward of block',
     },
+    summary: {
+      title: 'Summary',
+    },
   },
 };

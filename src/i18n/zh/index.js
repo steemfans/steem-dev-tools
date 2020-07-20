@@ -10,5 +10,8 @@ export default {
     block_reward: {
       title: '每个块的奖励',
     },
+    summary: {
+      title: '汇总',
+    },
   },
 };

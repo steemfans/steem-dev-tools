@@ -7,6 +7,7 @@ import {
   Col,
   Card,
   List,
+  Tooltip,
 } from 'ant-design-vue';
 import App from './App.vue';
 import router from './router';
@@ -26,6 +27,7 @@ const components = [
   List,
   List.Item,
   List.Item.Meta,
+  Tooltip,
 ];
 components.map((component) => Vue.use(component));
 
