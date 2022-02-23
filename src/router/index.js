@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '@/views/Home.vue';
-import BlockProducerData from '@/views/BlockProducerData.vue';
+import BlockRewardProps from '@/views/BlockRewardProps.vue';
 import DiscountAccountProps from '@/views/DiscountAccountProps.vue';
 
 Vue.use(VueRouter);
@@ -13,9 +13,9 @@ const routes = [
     component: Home,
   },
   {
-    path: '/block_producer_data',
-    name: 'BlockProducerData',
-    component: BlockProducerData,
+    path: '/block_reward_props',
+    name: 'BlockRewardProps',
+    component: BlockRewardProps,
   },
   {
     path: '/discount_account_props',

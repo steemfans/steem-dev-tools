@@ -1,6 +1,8 @@
 export default {
   common: {
     home: 'Home',
+    block_reward_props: 'Block Reward Props',
+    discount_account_props: 'Discount Account Props',
     about: 'About',
   },
   about: {

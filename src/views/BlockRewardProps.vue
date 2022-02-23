@@ -2,22 +2,22 @@
   <div class="home">
     <a-row type="flex" justify="start" :gutter="[16, 16]">
       <a-col :xs="24" :md="12">
-        <BlockInfo />
+        <BlockReward />
       </a-col>
     </a-row>
   </div>
 </template>
 
 <script>
-import BlockInfo from '@/components/BlockInfo.vue';
+import BlockReward from '@/components/BlockReward.vue';
 
 export default {
-  name: 'Home',
+  name: 'BlockRewardProps',
   data() {
     return {};
   },
   components: {
-    BlockInfo,
+    BlockReward,
   },
   methods: {},
   mounted() {
