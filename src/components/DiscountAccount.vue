@@ -44,12 +44,12 @@ export default {
       // Display the data
       this.data = [
         {
-          paramName: `gpo.available_account_subsidies`,
+          paramName: 'gpo.available_account_subsidies',
           tips: 'https://github.com/steemit/steem/blob/0.23.x/libraries/chain/steem_evaluator.cpp#L2657',
           value: dgp.available_account_subsidies,
         },
         {
-          paramName: `w.available_witness_account_subsidies`,
+          paramName: 'w.available_witness_account_subsidies',
           tips: 'https://github.com/steemit/steem/blob/0.23.x/libraries/chain/steem_evaluator.cpp#L2649',
           value: w.available_witness_account_subsidies,
         },
