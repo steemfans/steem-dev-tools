@@ -64,13 +64,9 @@ export default {
         },
         {
           paramName: 'wso.account_subsidy_witness_rd',
-          value: wso.account_subsidy_witness_rd,
+          tips: 'https://github.com/steemit/steem/blob/0.23.x/libraries/chain/database.cpp#L2517',
+          value: JSON.stringify(wso.account_subsidy_witness_rd),
         },
-        {
-          paramName: 'w.available_witness_account_subsidies',
-          value: w.available_witness_account_subsidies,
-        },
-
       ];
       this.loading = false;
     },
