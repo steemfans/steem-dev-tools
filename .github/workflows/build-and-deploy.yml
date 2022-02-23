@@ -32,8 +32,7 @@ jobs:
           context: .
           push: true
           tags: steemfans/steem-dev-tools:latest
-          build-args:
-            - TAG=master
+          build-args: TAG=master
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
