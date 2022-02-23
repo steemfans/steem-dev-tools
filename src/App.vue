@@ -21,7 +21,7 @@
           </router-link>
         </a-menu-item>
         <a-menu-item key="discount_account_props">
-          <a-icon type="contact" />
+          <a-icon type="user" />
           <router-link to="/discount_account_props">
             <span class="nav-text">{{ $t("common.discount_account_props") }}</span>
           </router-link>

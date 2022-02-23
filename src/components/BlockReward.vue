@@ -1,5 +1,5 @@
 <template>
-  <a-card :title="$t('home.summary.title')" :loading="loading">
+  <a-card :title="$t('common.block_reward_props')" :loading="loading">
     <a-list item-layout="horizontal" :data-source="data">
       <a-list-item slot="renderItem" slot-scope="item">
         <a-list-item-meta
