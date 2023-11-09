@@ -93,11 +93,11 @@ export default {
       witnessReward2 /= wso.witness_pay_normalization_factor;
 
       let newSbd = 0;
+      const baseFeed = feed.current_median_history.base.split(' '); // SBD
+      const quoteFeed = feed.current_median_history.quote.split(' '); // STEEM
 
       if (spsFund) {
-        const baseF = feed.current_median_history.base.split(' '); // SBD
-        // const quoteF = feed.current_median_history.quote.split(' '); // STEEM
-        newSbd = spsFund * baseF[0];
+        newSbd = spsFund * baseFeed[0];
         // Transfer to STEEM_TREASURY_ACCOUNT of newSbd
         console.log(`transfer to ${STEEM_TREASURY_ACCOUNT} ${newSbd} SBD.`);
       }
@@ -106,11 +106,13 @@ export default {
       const newSteem2 = contentReward2 + vestingReward + witnessReward2;
 
       // current_median_price
-      const currentMedianPrice = feed.current_median_history.base.split(' ')[0] / feed.current_median_history.quote(' ')[0];
+      const currentMedianPrice = baseFeed[0] / quoteFeed[0];
 
+      const currentSupply = dgp.current_supply.split(' ');
+      const currentSbdSupply = dgp.current_sbd_supply.split(' ');
       // Percent SBD
-      const tmpCurrentSbdSupplyAsSteemUnit = dgp.current_sbd_supply.split(' ')[0] / currentMedianPrice;
-      const percentSbd = tmpCurrentSbdSupplyAsSteemUnit / (dgp.current_supply.split(' ')[0] + tmpCurrentSbdSupplyAsSteemUnit);
+      const tmpCurrentSbdSupplyAsSteemUnit = currentSbdSupply[0] / currentMedianPrice;
+      const percentSbd = tmpCurrentSbdSupplyAsSteemUnit / (currentSupply[0] + tmpCurrentSbdSupplyAsSteemUnit);
 
       // Display the data
       this.data = [
