@@ -111,8 +111,8 @@ export default {
       const currentSupply = dgp.current_supply.split(' ');
       const currentSbdSupply = dgp.current_sbd_supply.split(' ');
       // Percent SBD
-      const tmpCurrentSbdSupplyAsSteemUnit = currentSbdSupply[0] / currentMedianPrice;
-      const percentSbd = tmpCurrentSbdSupplyAsSteemUnit / (currentSupply[0] + tmpCurrentSbdSupplyAsSteemUnit);
+      const tmpSbdSupply = currentSbdSupply[0] / currentMedianPrice;
+      const percentSbd = tmpSbdSupply / (currentSupply[0] + tmpSbdSupply);
 
       // Display the data
       this.data = [
