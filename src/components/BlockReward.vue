@@ -106,11 +106,11 @@ export default {
       const newSteem2 = contentReward2 + vestingReward + witnessReward2;
 
       // current_median_price
-      const current_median_price = feed.current_median_history.base.split(' ')[0] / feed.current_median_history.quote(' ')[0];
+      const currentMedianPrice = feed.current_median_history.base.split(' ')[0] / feed.current_median_history.quote(' ')[0];
 
       // Percent SBD
-      const tmp_current_sbd_supply_as_steem_unit = dgp.current_sbd_supply.split(' ')[0] / current_median_price
-      const percent_sbd = tmp_current_sbd_supply_as_steem_unit / (dgp.current_supply.split(' ')[0] + tmp_current_sbd_supply_as_steem_unit)
+      const tmpCurrentSbdSupplyAsSteemUnit = dgp.current_sbd_supply.split(' ')[0] / currentMedianPrice;
+      const percentSbd = tmpCurrentSbdSupplyAsSteemUnit / (dgp.current_supply.split(' ')[0] + tmpCurrentSbdSupplyAsSteemUnit);
 
       // Display the data
       this.data = [
@@ -167,7 +167,7 @@ export default {
         {
           paramName: 'current_median_history',
           tips: 'base / quote',
-          value: `${feed.current_median_history.base} / ${feed.current_median_history.quote}  (${current_median_price})`,
+          value: `${feed.current_median_history.base} / ${feed.current_median_history.quote}  (${currentMedianPrice})`,
         },
         {
           paramName: 'head_block_number',
@@ -267,8 +267,8 @@ export default {
         {
           paramName: 'Percent SBD',
           tips: 'percent_sbd = (current_sbd_supply/median_price) / (current_supply + current_sbd_supply/median_price )',
-          value: `${percent_sbd * 100} %`,
-        }
+          value: `${percentSbd * 100} %`,
+        },
       ];
       this.loading = false;
       console.log(
