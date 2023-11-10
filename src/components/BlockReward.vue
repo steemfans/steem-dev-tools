@@ -108,11 +108,10 @@ export default {
       // current_median_price
       const currentMedianPrice = baseFeed[0] / quoteFeed[0];
 
-      const currentSupply = dgp.current_supply.split(' ');
-      const currentSbdSupply = dgp.current_sbd_supply.split(' ');
       // Percent SBD
+      const currentSbdSupply = dgp.current_sbd_supply.split(' ');
       const tmpSbdSupply = currentSbdSupply[0] / currentMedianPrice;
-      const percentSbd = tmpSbdSupply / (parseInt(currentSupply[0], 10) + tmpSbdSupply);
+      const percentSbd = (tmpSbdSupply +  virtualSupply[0] / 2) / virtualSupply[0];
 
       // Display the data
       this.data = [
@@ -268,7 +267,7 @@ export default {
         },
         {
           paramName: 'Percent SBD',
-          tips: 'percent_sbd = (current_sbd_supply/median_price) / (current_supply + current_sbd_supply/median_price )',
+          tips: 'percent_sbd = (current_sbd_supply/median_price + virtual_supply/2) / virtual_supply',
           value: `${percentSbd * 100} %`,
         },
       ];
