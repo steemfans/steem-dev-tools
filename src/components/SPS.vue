@@ -38,7 +38,6 @@ export default {
       this.loading = true;
       const dgp = await steem.api.getDynamicGlobalPropertiesAsync();
       const results = await steem.api.getAccountsAsync(['steem.dao']);
-      console.log(results);
 
       // Display the data
       this.data = [
@@ -58,14 +57,14 @@ export default {
           value: dgp.current_sbd_supply,
         },
         {
-          paramName: `last_budget_time`,
+          paramName: 'last_budget_time',
           tips: '上次 SPS 资金发放时间',
           value: dgp.last_budget_time,
         },
         {
-          paramName: `next_maintenance_time`,
+          paramName: 'next_maintenance_time',
           tips: '下次 SPS 资金发放时间',
-          value: currentInflationRate,
+          value: dgp.next_maintenance_time,
         },
         {
           paramName: 'sps_fund_percent',
