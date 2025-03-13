@@ -3,6 +3,7 @@ export default {
     home: '首页',
     block_reward_props: '块收益相关参数',
     discount_account_props: '申请牌子相关参数',
+    sps_props: 'SPS相关参数',
     about: '关于',
   },
   about: {

@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Home from '@/views/Home.vue';
 import BlockRewardProps from '@/views/BlockRewardProps.vue';
 import DiscountAccountProps from '@/views/DiscountAccountProps.vue';
+import SPSProps from '@/views/SPSProps.vue';
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,11 @@ const routes = [
     path: '/discount_account_props',
     name: 'DiscountAccountProps',
     component: DiscountAccountProps,
+  },
+  {
+    path: '/sps_props',
+    name: 'SPSProps',
+    component: SPSProps,
   },
   {
     path: '/about',

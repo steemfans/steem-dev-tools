@@ -3,6 +3,7 @@ export default {
     home: 'Home',
     block_reward_props: 'Block Reward Props',
     discount_account_props: 'Discount Account Props',
+    sps_props: 'SPS Props',
     about: 'About',
   },
   about: {
