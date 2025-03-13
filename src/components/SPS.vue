@@ -77,7 +77,7 @@ export default {
         {
           paramName: 'sbd_interest_rate',
           tips: 'SBD 利率(用于文章收益中的 SBD 计算)',
-          value: dgp.sbd_interest_rate,
+          value: `${dgp.sbd_interest_rate}`,
         },
         {
           paramName: 'sbd_start_percent',
