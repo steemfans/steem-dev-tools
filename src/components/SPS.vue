@@ -37,17 +37,13 @@ export default {
     async initData() {
       this.loading = true;
       const dgp = await steem.api.getDynamicGlobalPropertiesAsync();
-      const [account, err] = await steem.api.getAccountsAsync(['steem.dao']);
-      if (err) {
-        console.error('Error fetching account data:', err);
-        return;
-      }
+      const accounts = await steem.api.getAccountsAsync(['steem.dao']);
       // Display the data
       this.data = [
         {
           paramName: '每小时发放资金理论值',
           tips: 'steem.dao余额 / 100 / 24 + SBD通胀 (其中 SBD 通胀目前为 0)',
-          value: `${(account.sbd_balance / 100 / 24).toFixed(3)} SBD`,
+          value: `${(accounts[0].sbd_balance.split(' ')[0] / 100 / 24).toFixed(3)} SBD`,
         },
         {
           paramName: 'sps_interval_ledger',
