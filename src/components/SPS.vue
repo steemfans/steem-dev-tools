@@ -37,8 +37,11 @@ export default {
     async initData() {
       this.loading = true;
       const dgp = await steem.api.getDynamicGlobalPropertiesAsync();
-      const results = await steem.api.getAccountsAsync(['steem.dao']);
-
+      const [err, results] = await steem.api.getAccountsAsync(['steem.dao']);
+      if (err) {
+        console.error('Error fetching account data:', err);
+        return;
+      }
       // Display the data
       this.data = [
         {

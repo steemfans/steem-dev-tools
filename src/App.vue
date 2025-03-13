@@ -26,6 +26,12 @@
             <span class="nav-text">{{ $t("common.discount_account_props") }}</span>
           </router-link>
         </a-menu-item>
+        <a-menu-item key="sps_props">
+          <a-icon type="user" />
+          <router-link to="/sps_props">
+            <span class="nav-text">{{ $t("common.sps_props") }}</span>
+          </router-link>
+        </a-menu-item>
         <a-menu-item key="about">
           <a-icon type="bulb" />
           <router-link to="/about">
@@ -43,7 +49,7 @@
           <router-view/>
         </div>
       </a-layout-content>
-      <a-layout-footer style="textAlign: center">
+      <a-layout-footer style="text-align: center">
         Steem Dev Tools ©2020 Created by <a href="https://steemit/@ety001">@ety001</a>
       </a-layout-footer>
     </a-layout>
